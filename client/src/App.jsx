@@ -3,9 +3,7 @@ import './App.css';
 
 function App() {
   // --- CONFIGURATION ---
-  
-  // ⚠️ IMPORTANT: REPLACE THIS WITH YOUR EXACT RENDER URL ⚠️
-  // Go to dashboard.render.com -> Click your service -> Copy URL from top left
+  // HARDCODED to ensure no mistakes
   const API_BASE = "https://superrankings-app.onrender.com"; 
 
   // --- STATE ---
@@ -183,7 +181,7 @@ function App() {
   return (
     <div className="app-container">
       <header>
-        <h1>NFL Consensus Power Rankings</h1>
+        <h1>NFL Consensus Power Rankings (v2)</h1>
         <button onClick={handleAdminClick}>
           {view === 'table' ? 'Admin Login' : 'Back to Table'}
         </button>
