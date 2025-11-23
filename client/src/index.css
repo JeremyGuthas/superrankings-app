@@ -1,0 +1,351 @@
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  background-color: #f3f4f6;
+  margin: 0;
+  padding: 20px;
+  color: #1f2937;
+}
+
+/* --- MAIN CONTAINER --- */
+.app-container {
+  background: white;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+}
+
+/* --- HEADER --- */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+header h1 {
+  color: #111827;
+  font-size: 2rem;
+  margin: 0;
+}
+
+/* --- BUTTONS --- */
+button {
+  padding: 10px 15px;
+  background: #374151;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background 0.2s;
+}
+
+button:hover {
+  background: #1f2937;
+}
+
+/* --- WEEK TABS --- */
+.week-tabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #e5e7eb;
+  padding-bottom: 10px;
+  overflow-x: auto;
+}
+
+.tab {
+  padding: 10px 20px;
+  background: none;
+  color: #6b7280;
+  font-weight: 600;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.tab:hover {
+  background-color: #f3f4f6;
+  color: #111827;
+}
+
+.tab.active {
+  background-color: #2563eb; /* Standard Blue */
+  color: white;
+}
+
+/* --- TABLE STYLES --- */
+.table-wrapper {
+  overflow-x: auto;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 800px;
+}
+
+thead {
+  background-color: #1f2937; /* Dark Header */
+  color: white;
+}
+
+th {
+  padding: 15px;
+  text-align: left;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  letter-spacing: 0.05em;
+}
+
+/* --- ALIGNMENT FIXES --- */
+td {
+  padding: 12px 15px;
+  border-bottom: none; /* No lines */
+  vertical-align: middle; /* Keeps Rank/Name aligned */
+  height: 50px;
+}
+
+tr:nth-child(even) {
+  background-color: #f9fafb; /* Zebra Striping */
+}
+
+tr:hover {
+  background-color: #f3f4f6;
+}
+
+/* --- RANK & TEAM --- */
+.rank-num {
+  font-weight: 800;
+  color: #374151;
+  font-size: 1.1rem;
+  text-align: center;
+  width: 50px;
+}
+
+.team-cell {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 600;
+  color: #111827;
+  height: 100%;
+}
+
+/* --- SCORE --- */
+.score-cell {
+  font-weight: 800;
+  color: #059669; /* Nice clean green */
+  font-size: 1.2rem;
+}
+
+/* --- TAGS --- */
+.source-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.tag {
+  background: #e5e7eb;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  color: #4b5563;
+  white-space: nowrap;
+  border: 1px solid transparent;
+}
+
+.tag strong {
+  color: #111827;
+}
+
+/* --- ADMIN PANEL STYLES --- */
+.admin-panel {
+    max-width: 800px;
+    margin: 0 auto;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.alerts-section {
+    background-color: #fff1f2; /* Light Red */
+    border: 1px solid #fecaca;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.alerts-section h3 {
+    margin-top: 0;
+    color: #991b1b;
+}
+
+.no-alerts {
+    color: #059669;
+    font-weight: bold;
+}
+
+.team-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.chip {
+    background: white;
+    border: 1px solid #f87171;
+    color: #b91c1c;
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 0.9rem;
+}
+
+.chip:hover {
+    background: #fca5a5;
+    color: white;
+}
+
+.chip.active-chip {
+    background: #dc2626;
+    color: white;
+    border-color: #dc2626;
+    box-shadow: 0 2px 5px rgba(220, 38, 38, 0.3);
+}
+
+.divider {
+    border: 0;
+    height: 1px;
+    background: #e5e7eb;
+    margin: 30px 0;
+}
+
+.form-row {
+    display: flex;
+    gap: 15px;
+}
+
+.form-input {
+    padding: 10px;
+    width: 100%;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    margin-top: 5px;
+    font-size: 1rem;
+}
+
+.rank-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.rank-input-group {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #f9fafb;
+    padding: 10px 15px;
+    border-radius: 8px;
+    border: 1px solid #e5e7eb;
+}
+
+.rank-input-group input {
+    width: 60px;
+    padding: 5px;
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.rank-input-group.outlier-input {
+    background-color: #fee2e2;
+    border: 1px solid #ef4444;
+}
+
+.rank-input-group.outlier-input input {
+    border-color: #ef4444;
+    color: #b91c1c;
+}
+
+.save-btn {
+    margin-top: 25px;
+    width: 100%;
+    padding: 15px;
+    background-color: #059669;
+    color: white;
+    border: none;
+    font-size: 1.1rem;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.save-btn:hover {
+    background-color: #047857;
+}
+
+.login-box {
+    max-width: 350px;
+    margin: 60px auto;
+    text-align: center;
+    padding: 30px;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    background: white;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+.login-input {
+    padding: 12px;
+    width: 100%;
+    margin-bottom: 15px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 1rem;
+}
+
+.login-btn {
+    width: 100%;
+    padding: 12px;
+    background-color: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.approve-btn {
+    background: white;
+    border: 1px solid #059669;
+    color: #059669;
+    padding: 5px 8px;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-left: 10px;
+    transition: all 0.2s;
+}
+
+.approve-btn:hover {
+    background: #059669;
+    color: white;
+}
