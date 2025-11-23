@@ -8,18 +8,16 @@ app.use(cors());
 app.use(express.json());
 
 // --- SECURITY CONFIGURATION ---
-// The password now lives HERE, on the server, where nobody can see it.
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "Touchdown2025";
 
 const pool = new Pool({
-    connectionString: "postgresql://postgres.ehqbshrasyztadybvfzp:mG09CvCCASo6R5cd@aws-1-us-west-1.pooler.supabase.com:6543/postgres",
+    // FIXED: Updated to US WEST (aws-1-us-west-1) as you requested earlier
+    connectionString: "postgres://postgres.ehqbshrasyztadybvfzp:mG09CvCCASo6R5cd@aws-1-us-west-1.pooler.supabase.com:6543/postgres",
     ssl: { rejectUnauthorized: false } 
 });
 
 // --- ROUTES ---
 
-// 1. Login Check (New Route)
-// This allows the frontend to ask "Is this password correct?" without knowing the secret.
 app.post('/login', (req, res) => {
     const { password } = req.body;
     if (password === ADMIN_PASSWORD) {
@@ -29,7 +27,6 @@ app.post('/login', (req, res) => {
     }
 });
 
-// 2. Get Rankings
 app.get('/rankings', async (req, res) => {
     const week = req.query.week || 1; 
     try {
@@ -81,13 +78,10 @@ app.get('/sources', async (req, res) => {
     } catch (err) { console.error(err); }
 });
 
-// 3. Submit Rankings (SECURED)
 app.post('/submit-rankings', async (req, res) => {
-    const { team_id, week, ranks, password } = req.body; // We now expect a password
+    const { team_id, week, ranks, password } = req.body; 
     
-    // SECURITY CHECK
     if (password !== ADMIN_PASSWORD) {
-        console.log("⛔ Blocked unauthorized save attempt.");
         return res.status(401).json({ success: false, message: "Unauthorized" });
     }
 
@@ -117,11 +111,9 @@ app.post('/submit-rankings', async (req, res) => {
     }
 });
 
-// 4. Approve Outlier (SECURED)
 app.post('/approve-outlier', async (req, res) => {
-    const { ranking_id, password } = req.body; // Expect password
+    const { ranking_id, password } = req.body; 
 
-    // SECURITY CHECK
     if (password !== ADMIN_PASSWORD) {
         return res.status(401).json({ success: false, message: "Unauthorized" });
     }
@@ -140,4 +132,6 @@ app.post('/approve-outlier', async (req, res) => {
     }
 });
 
-app.listen(3000, () => console.log('✅ Backend running on port 3000'));
+// USE RENDER PORT OR DEFAULT TO 3000
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log(`✅ Backend running on port ${PORT}`));

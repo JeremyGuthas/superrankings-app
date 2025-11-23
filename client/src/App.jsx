@@ -3,39 +3,33 @@ import './App.css';
 
 function App() {
   // --- CONFIGURATION ---
-  // PASTE YOUR RENDER URL HERE (No trailing slash)
-  const PROD_API = "https://superrankings-app.onrender.com"; 
   
-  // Simple toggle for development vs production
-  // Change this to TRUE when you push to GitHub/Vercel
-  // Change this to FALSE when you are coding on your laptop
-  const IS_LIVE = true; 
+  // ⚠️ IMPORTANT: REPLACE THIS WITH YOUR EXACT RENDER URL ⚠️
+  // Go to dashboard.render.com -> Click your service -> Copy URL from top left
+  const API_BASE = "https://superrankings-app.onrender.com"; 
 
-  const API_BASE = PROD_API;
-
-  // --- STATE MANAGEMENT ---
+  // --- STATE ---
   const [view, setView] = useState('table'); 
   const [rankings, setRankings] = useState([]);
   const [availableWeeks, setAvailableWeeks] = useState([]);
   const [currentViewWeek, setCurrentViewWeek] = useState(1); 
 
-  // Admin & Auth State
   const [isAdmin, setIsAdmin] = useState(false);
   const [passwordInput, setPasswordInput] = useState('');
   const [adminToken, setAdminToken] = useState(''); 
   
-  // Form Data State
   const [teams, setTeams] = useState([]);
   const [sources, setSources] = useState([]);
   const [selectedTeam, setSelectedTeam] = useState('');
   const [selectedWeek, setSelectedWeek] = useState(12);
   const [inputRanks, setInputRanks] = useState({});
   
-  // Outlier Tracking
   const [outlierMap, setOutlierMap] = useState({}); 
 
-  // --- INITIAL DATA FETCHING ---
   useEffect(() => {
+    // This log helps debugging on the iPad
+    console.log("Connecting to API:", API_BASE);
+    
     fetchDropdowns();
     fetchWeeks(); 
     fetchRankings(currentViewWeek);
@@ -58,7 +52,6 @@ function App() {
     }
   }, [selectedTeam, selectedWeek, view, rankings]); 
 
-  // --- API FUNCTIONS ---
   const fetchRankings = (week) => {
     fetch(`${API_BASE}/rankings?week=${week}`)
       .then(res => res.json())
@@ -103,7 +96,6 @@ function App() {
       setOutlierMap(newOutliers);
   };
 
-  // --- AUTHENTICATION ---
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
@@ -136,7 +128,6 @@ function App() {
     }
   };
 
-  // --- SAVE ACTIONS ---
   const handleSubmit = async (e) => {
     e.preventDefault();
     
@@ -214,7 +205,7 @@ function App() {
 
           <div className="table-wrapper">
             {rankings.length === 0 ? (
-              <p style={{textAlign:'center', padding:'20px'}}>No data found for Week {currentViewWeek}.</p>
+              <p style={{textAlign:'center', padding:'20px'}}>Loading Rankings...</p>
             ) : (
             <table>
               <thead>
@@ -345,7 +336,6 @@ function App() {
                             onChange={(e) => handleInputChange(source.id, e.target.value)}
                         />
                         
-                        {/* APPROVE BUTTON */}
                         {outlierMap[source.id] && (
                             <button 
                                 type="button" 
@@ -372,6 +362,4 @@ function App() {
   );
 }
 
-
-  
 export default App;
