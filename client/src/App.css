@@ -173,7 +173,7 @@ td {
 }
 
 /* =========================================
-   MOBILE "SPORTS CARD" LAYOUT (Fixed)
+   MOBILE CARD LAYOUT (Taller & Narrower)
    ========================================= */
 @media (max-width: 768px) {
   
@@ -187,22 +187,31 @@ td {
   thead { display: none; }
 
   .app-container {
-    padding: 10px;
+    padding: 10px; /* Less outer padding */
     background: transparent;
     box-shadow: none;
+    /* Allow cards to breathe */
+    max-width: 100%;
   }
 
   /* 2. The Card Container */
   tr {
     background: white;
-    margin-bottom: 15px;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08); /* Slightly deeper shadow */
+    /* MARGINS: Pulls card away from screen edges (fixes "Too Wide") */
+    margin: 0 10px 20px 10px; 
+    border-radius: 16px; /* Softer corners */
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08); /* Deeper shadow */
     border: 1px solid #e5e7eb;
     
-    /* KEY CHANGE: Add padding at TOP for the Rank/Score header */
-    padding: 50px 20px 20px 20px; 
-    position: relative; /* Allows absolute positioning inside */
+    /* PADDING: Gives vertical height (fixes "Too Short") */
+    padding: 60px 25px 25px 25px; 
+    position: relative;
+    
+    /* Minimum height to ensure it feels substantial */
+    min-height: 180px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Pushes tags to bottom */
   }
 
   td {
@@ -210,82 +219,90 @@ td {
     border: none;
   }
 
-  /* 3. RANK (Absolute Top Left) */
+  /* 3. RANK (Absolute Top Left - Perfect Alignment) */
   .rank-num {
     position: absolute;
-    top: 15px;
-    left: 20px;
-    font-size: 1.4rem; /* Big number */
-    color: #9ca3af;    /* Muted gray */
+    top: 20px;
+    left: 25px;
+    font-size: 1.5rem; /* Bigger Rank */
+    color: #1f2937;    /* Darker color */
+    font-weight: 900;
     width: auto;
     text-align: left;
-    font-weight: 900;
-    letter-spacing: -1px;
   }
-  
-  /* 4. SCORE (Absolute Top Right) */
+  .rank-num::before {
+    content: "#";
+    font-size: 1rem;
+    color: #9ca3af;
+    font-weight: 400;
+    margin-right: 2px;
+  }
+
+  /* 4. SCORE (Absolute Top Right - Perfect Alignment) */
   .score-cell {
     position: absolute;
-    top: 15px;
-    right: 20px;
+    top: 20px;
+    right: 25px;
     text-align: right;
-    font-size: 1.6rem;
+    font-size: 1.8rem; /* Bigger Score */
     line-height: 1;
     color: #059669;
   }
-  
   .score-cell::after {
-    content: "AVG";
+    content: "AVG RANK";
     display: block;
-    font-size: 0.65rem;
+    font-size: 0.6rem;
     color: #9ca3af;
     font-weight: 700;
-    margin-top: 2px;
+    margin-top: 4px;
     letter-spacing: 1px;
   }
 
-  /* 5. TEAM (Centered in the middle) */
+  /* 5. TEAM (Centered and Large) */
   .team-cell {
-    font-size: 1.4rem;
-    justify-content: center; /* Center the logo and name */
-    margin-bottom: 15px;
-    padding-bottom: 15px;
-    border-bottom: 2px solid #f3f4f6;
+    font-size: 1.6rem; /* Much larger team name */
+    justify-content: center; 
+    margin-top: 10px;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #f3f4f6;
     width: 100%;
+    text-align: center;
+    flex-direction: column; /* Stack Logo above Name */
+    gap: 15px;
   }
 
   .team-cell img {
-    width: 40px; 
-    height: 40px;
-    margin-right: 12px;
+    width: 60px; /* Larger Logo */
+    height: 60px;
+    margin-right: 0; /* Remove side margin since it's stacked */
   }
-
-  /* 6. TAGS (Horizontal Scroll) */
+  
+  /* 6. TAGS (Horizontal Scroll with more breathing room) */
   .source-tags {
     display: flex;
-    gap: 8px;
+    gap: 10px;
     overflow-x: auto;
     padding-bottom: 5px;
+    /* Hide Scrollbar */
     scrollbar-width: none; 
     -ms-overflow-style: none; 
   }
-  
-  .source-tags::-webkit-scrollbar { 
-    display: none; 
-  }
+  .source-tags::-webkit-scrollbar { display: none; }
 
   .tag {
     flex: 0 0 auto;
-    padding: 8px 12px;
-    background: #f9fafb;
-    border: 1px solid #e5e7eb;
+    padding: 8px 14px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
     font-size: 0.85rem;
     font-weight: 500;
-    border-radius: 6px;
+    border-radius: 8px;
+    color: #475569;
   }
-  
-  /* Admin Forms */
+
+  /* Fix Inputs */
+  input, select, textarea { font-size: 16px !important; }
   .form-row { flex-direction: column; }
   .rank-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
-  input, select, textarea { font-size: 16px !important; }
 }
