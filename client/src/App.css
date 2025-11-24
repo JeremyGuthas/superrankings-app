@@ -3,9 +3,9 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   background-color: #f3f4f6;
   margin: 0;
-  padding: 10px; /* Reduced padding for mobile */
+  padding: 10px;
   color: #1f2937;
-  overflow-x: hidden; /* Prevent horizontal scrolling on body */
+  overflow-x: hidden; /* Prevents side-scrolling on mobile */
 }
 
 /* --- MAIN CONTAINER --- */
@@ -62,7 +62,7 @@ button:hover {
   gap: 8px;
   margin-bottom: 20px;
   padding-bottom: 10px;
-  overflow-x: auto; /* Horizontal scroll for tabs */
+  overflow-x: auto;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none; 
   border-bottom: 2px solid #e5e7eb;
@@ -74,7 +74,7 @@ button:hover {
   color: #6b7280;
   font-weight: 600;
   border: 1px solid #e5e7eb;
-  border-radius: 20px; /* Pill shape */
+  border-radius: 20px;
   cursor: pointer;
   white-space: nowrap;
   flex-shrink: 0;
@@ -87,7 +87,6 @@ button:hover {
 }
 
 /* --- DESKTOP TABLE STYLES --- */
-/* These apply by default to large screens */
 .table-wrapper {
   width: 100%;
   overflow-x: auto;
@@ -174,166 +173,124 @@ td {
 }
 
 /* =========================================
-   MOBILE CARD LAYOUT (Vertical Screen Fix) 
+   MOBILE CARD LAYOUT (The Fix)
    ========================================= */
 @media (max-width: 768px) {
   
-  /* 1. Break the Table Structure completely */
+  /* 1. Break Table Layout */
   table, thead, tbody, th, td, tr { 
     display: block; 
     width: 100%;
-    box-sizing: border-box;
   }
 
-  /* 2. Reset Container Styles */
   .app-container {
     padding: 10px;
     background: transparent;
     box-shadow: none;
-    width: 100vw; /* Force full width */
-    overflow-x: hidden;
   }
   
-  .table-wrapper {
-    overflow: visible; /* Let content flow naturally */
-  }
-
-  /* 3. Header Adjustments */
-  header {
-    flex-direction: column;
-    align-items: stretch;
-    background: white;
-    padding: 15px;
-    border-radius: 12px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-    margin: 0 0 20px 0;
-  }
-
-  header h1 {
-    text-align: center;
-    font-size: 1.5rem;
-  }
-
-  /* 4. Hide Table Headers */
+  /* 2. Hide Header Row */
   thead {
     display: none; 
   }
 
-  /* 5. The Card (Row) */
+  /* 3. Card Style Rows */
   tr {
-    position: relative;
     background: white;
-    margin-bottom: 15px;
+    margin-bottom: 12px;
     border-radius: 12px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
     border: 1px solid #e5e7eb;
-    padding: 15px;
-    display: grid;
-    /* Two Columns: [Rank+Team]  [Score] */
-    grid-template-columns: 1fr auto;
-    grid-template-rows: auto auto;
-    gap: 10px;
+    padding: 12px;
+    position: relative;
   }
 
-  /* 6. Cell Reset */
+  /* 4. Flexbox Layout for Top Row (Rank - Name - Score) */
   td {
     padding: 0;
     border: none;
-    height: auto;
-    text-align: left;
   }
 
-  /* --- Specific Cell Positioning --- */
+  /* RANK: Small gray number top left */
+  .rank-num {
+    text-align: left;
+    font-size: 0.85rem;
+    color: #9ca3af;
+    margin-bottom: 4px;
+    width: auto;
+  }
+  .rank-num::before {
+    content: "#";
+  }
 
-  /* RANK & TEAM NAME (Merged visually) */
+  /* TEAM: Big text with Logo */
   .team-cell {
-    grid-column: 1; /* Left side */
-    grid-row: 1;    /* Top row */
-    font-size: 1.1rem;
-    margin-bottom: 5px;
+    font-size: 1.25rem;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #f3f4f6;
     display: flex;
     align-items: center;
-    flex-wrap: wrap; /* Allow wrapping if name is huge */
+    justify-content: space-between; /* Push Score to right */
   }
-
-  /* We move the Rank Number *inside* the visual space of the team name using grid */
-  .rank-num {
-    grid-column: 1; 
-    grid-row: 1;
-    font-size: 0.8rem;
-    color: #6b7280;
-    width: auto;
-    text-align: left;
-    margin-bottom: 2px;
-    position: absolute;
-    top: 10px;
-    left: 15px;
-    display: none; /* Hide the separate rank cell, we will use the index or combine it */
-  }
-  
-  /* Trick: Use ::before on team cell to show rank if needed, 
-     OR just rely on the sorting order. Let's keep it clean. */
 
   .team-cell img {
-    width: 32px; 
-    height: 32px;
+    width: 30px; 
+    height: 30px;
     margin-right: 10px;
   }
 
-  /* SCORE (Top Right Corner) */
+  /* SCORE: Move it inside the team-cell visually via position absolute or flex */
+  /* NOTE: In HTML, score is a separate TD. We move it visually with absolute positioning */
   .score-cell {
-    grid-column: 2; /* Right side */
-    grid-row: 1;    /* Top row */
-    text-align: right;
+    position: absolute;
+    top: 12px;
+    right: 15px;
     font-size: 1.4rem;
-    color: #059669;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    justify-content: center;
+    text-align: right;
   }
-
   .score-cell::after {
-    content: "AVG RANK";
+    content: "AVG";
+    display: block;
     font-size: 0.6rem;
     color: #9ca3af;
-    font-weight: 600;
-    margin-top: 2px;
+    line-height: 1;
   }
 
-  /* SOURCE TAGS (Bottom Row, Full Width) */
+  /* TAGS: Scrolling row at bottom */
   .source-tags {
-    grid-column: 1 / -1; /* Span both columns */
-    grid-row: 2;         /* Bottom row */
     display: flex;
-    flex-wrap: wrap;     /* Crucial: Wrap tags to next line */
     gap: 6px;
-    margin-top: 10px;
-    padding-top: 10px;
-    border-top: 1px solid #f3f4f6;
+    overflow-x: auto;
+    padding-bottom: 5px;
+    padding-top: 5px;
+    /* Hide Scrollbar but keep functionality */
+    scrollbar-width: none; 
+    -ms-overflow-style: none; 
+  }
+  .source-tags::-webkit-scrollbar { 
+    display: none; 
   }
 
   .tag {
-    flex: 1 1 auto; /* Grow to fill space, shrink if needed */
-    text-align: center;
-    font-size: 0.75rem;
-    padding: 6px 8px;
-    background-color: #f9fafb;
+    flex: 0 0 auto; /* Don't shrink */
+    background: #f9fafb;
     border: 1px solid #e5e7eb;
-    white-space: nowrap; /* Keep "ESPN: 1" on one line */
+    font-size: 0.8rem;
   }
 
-  /* Admin Forms on Mobile */
+  /* Fix Input Zoom on iPhone */
+  input, select, textarea {
+    font-size: 16px !important;
+  }
+  
+  /* Admin Layout Stack */
   .form-row {
     flex-direction: column;
   }
   
   .rank-grid {
-    grid-template-columns: 1fr; 
-  }
-  
-  /* Fix iOS Zoom */
-  input, select, textarea {
-    font-size: 16px !important;
+    grid-template-columns: 1fr 1fr; /* 2 columns on mobile inputs */
+    gap: 10px;
   }
 }
