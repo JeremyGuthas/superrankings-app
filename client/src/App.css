@@ -175,122 +175,126 @@ td {
 /* =========================================
    MOBILE CARD LAYOUT (The Fix)
    ========================================= */
+/* =========================================
+   MOBILE CARD LAYOUT (Fixed & Tight)
+   ========================================= */
 @media (max-width: 768px) {
   
-  /* 1. Break Table Layout */
+  /* 1. Reset Table to Blocks */
   table, thead, tbody, th, td, tr { 
     display: block; 
     width: 100%;
+    box-sizing: border-box;
   }
 
   .app-container {
     padding: 10px;
     background: transparent;
     box-shadow: none;
-  }
-  
-  /* 2. Hide Header Row */
-  thead {
-    display: none; 
+    overflow-x: hidden;
   }
 
-  /* 3. Card Style Rows */
+  thead { display: none; }
+
+  /* 2. The Card Container */
   tr {
     background: white;
     margin-bottom: 12px;
     border-radius: 12px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
     border: 1px solid #e5e7eb;
-    padding: 12px;
+    padding: 15px;
     position: relative;
+    display: flex;       /* Switch to Flexbox */
+    flex-direction: column;
+    gap: 10px;
   }
 
-  /* 4. Flexbox Layout for Top Row (Rank - Name - Score) */
   td {
     padding: 0;
     border: none;
+    height: auto;
+    width: 100%;
   }
 
-  /* RANK: Small gray number top left */
-  .rank-num {
-    text-align: left;
-    font-size: 0.85rem;
-    color: #9ca3af;
-    margin-bottom: 4px;
-    width: auto;
-  }
-  .rank-num::before {
-    content: "#";
-  }
-
-  /* TEAM: Big text with Logo */
+  /* 3. TOP ROW: Rank + Logo + Name + Score */
+  /* We hijack the 'team-cell' to act as the container for the whole top row */
   .team-cell {
-    font-size: 1.25rem;
-    margin-bottom: 10px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid #f3f4f6;
     display: flex;
     align-items: center;
-    justify-content: space-between; /* Push Score to right */
+    justify-content: flex-start;
+    gap: 12px;
+    border-bottom: 1px solid #f3f4f6;
+    padding-bottom: 10px;
+    margin-bottom: 0;
+    width: 100%;
+    position: relative;
   }
 
+  /* Rank Number */
+  .rank-num {
+    font-size: 1.2rem;
+    color: #9ca3af;
+    font-weight: 800;
+    width: auto;
+    min-width: 30px;
+  }
+
+  /* Logo */
   .team-cell img {
-    width: 30px; 
-    height: 30px;
-    margin-right: 10px;
+    width: 40px; 
+    height: 40px;
+    object-fit: contain;
+  }
+  
+  /* Team Name (Force it to show) */
+  .team-name-text { 
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #111827;
+    flex-grow: 1; /* Push score to the right */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block !important; /* Force visibility */
   }
 
-  /* SCORE: Move it inside the team-cell visually via position absolute or flex */
-  /* NOTE: In HTML, score is a separate TD. We move it visually with absolute positioning */
+  /* Score (Absolute position top right) */
   .score-cell {
     position: absolute;
-    top: 12px;
-    right: 15px;
-    font-size: 1.4rem;
+    right: 0;
+    top: 5px;
     text-align: right;
+    line-height: 1;
   }
   .score-cell::after {
     content: "AVG";
     display: block;
     font-size: 0.6rem;
     color: #9ca3af;
-    line-height: 1;
+    margin-top: 2px;
   }
 
-  /* TAGS: Scrolling row at bottom */
+  /* 4. BOTTOM ROW: Tags */
   .source-tags {
     display: flex;
+    flex-wrap: wrap;
     gap: 6px;
-    overflow-x: auto;
-    padding-bottom: 5px;
-    padding-top: 5px;
-    /* Hide Scrollbar but keep functionality */
-    scrollbar-width: none; 
-    -ms-overflow-style: none; 
-  }
-  .source-tags::-webkit-scrollbar { 
-    display: none; 
+    margin-top: 5px;
   }
 
   .tag {
-    flex: 0 0 auto; /* Don't shrink */
-    background: #f9fafb;
+    flex: 1 1 auto;
+    text-align: center;
+    font-size: 0.75rem;
+    padding: 6px 10px;
+    background-color: #f9fafb;
     border: 1px solid #e5e7eb;
-    font-size: 0.8rem;
+    color: #4b5563;
   }
 
-  /* Fix Input Zoom on iPhone */
-  input, select, textarea {
-    font-size: 16px !important;
-  }
-  
-  /* Admin Layout Stack */
-  .form-row {
-    flex-direction: column;
-  }
-  
-  .rank-grid {
-    grid-template-columns: 1fr 1fr; /* 2 columns on mobile inputs */
-    gap: 10px;
-  }
+  /* Admin Input Fixes */
+  .form-row { flex-direction: column; }
+  .rank-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+  input, select, textarea { font-size: 16px !important; }
 }

@@ -217,12 +217,19 @@ function App() {
               <tbody>
                 {rankings.map((team, index) => (
                   <tr key={index}>
-                    <td className="rank-num">#{index + 1}</td>
+                    {/* Clean the Rank (Remove ## or #) */}
+                    <td className="rank-num">
+                      #{team.rank_num ? team.rank_num.toString().replace(/#/g, '') : index + 1}
+                    </td>
+                    
                     <td className="team-cell">
                       <img src={team.logo_url} alt={team.name} width="40" />
-                      {team.name}
+                      {/* Added class for Mobile CSS to grab */}
+                      <span className="team-name-text">{team.name}</span>
                     </td>
+                    
                     <td className="score-cell">{team.consensus_score}</td>
+                    
                     <td className="source-tags">
                       {team.source_ranks && team.source_ranks.map((s, i) => (
                         <div 
