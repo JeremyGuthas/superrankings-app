@@ -1,4 +1,90 @@
-/* ... (Keep all the top Desktop styles exactly as they were) ... */
+/* --- GLOBAL RESET --- */
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  background-color: #f3f4f6;
+  margin: 0;
+  padding: 10px;
+  color: #1f2937;
+  overflow-x: hidden;
+}
+
+/* --- MAIN CONTAINER --- */
+.app-container {
+  background: white;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+}
+
+/* --- HEADER --- */
+header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #e5e7eb;
+  gap: 15px;
+}
+
+header h1 {
+  color: #111827;
+  font-size: 1.8rem;
+  margin: 0;
+  line-height: 1.2;
+}
+
+/* --- BUTTONS --- */
+button {
+  padding: 10px 16px;
+  background: #374151;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: background 0.2s;
+}
+
+button:hover {
+  background: #1f2937;
+}
+
+/* --- WEEK TABS --- */
+.week-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none; 
+  border-bottom: 2px solid #e5e7eb;
+}
+
+.tab {
+  padding: 8px 16px;
+  background: #f9fafb;
+  color: #6b7280;
+  font-weight: 600;
+  border: 1px solid #e5e7eb;
+  border-radius: 20px;
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.tab.active {
+  background-color: #2563eb;
+  color: white;
+  border-color: #2563eb;
+}
 
 /* --- DESKTOP TABLE STYLES --- */
 .table-wrapper {
@@ -9,144 +95,196 @@
 table {
   width: 100%;
   border-collapse: collapse;
-  min-width: 600px; /* This was causing the mobile issue */
+  min-width: 600px;
 }
 
-/* ... (Keep middle styles) ... */
+thead {
+  background-color: #1f2937;
+  color: white;
+}
+
+th {
+  padding: 15px;
+  text-align: left;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  letter-spacing: 0.05em;
+}
+
+td {
+  padding: 12px 15px;
+  border-bottom: 1px solid #f3f4f6;
+  vertical-align: middle;
+  height: 50px;
+}
+
+.rank-num {
+  font-weight: 800;
+  color: #374151;
+  font-size: 1.2rem;
+  text-align: center;
+  width: 50px;
+}
+
+.team-cell {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 700;
+  color: #111827;
+  font-size: 1.1rem;
+}
+
+.score-cell {
+  font-weight: 800;
+  color: #059669;
+  font-size: 1.2rem;
+}
+
+.source-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.tag {
+  background: #f3f4f6;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  color: #4b5563;
+  border: 1px solid transparent;
+  white-space: nowrap;
+}
+
+.tag strong {
+  color: #111827;
+}
+
+.approve-btn {
+  background: white;
+  border: 1px solid #059669;
+  color: #059669;
+  padding: 4px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-left: 10px;
+}
 
 /* =========================================
-   MOBILE CARD LAYOUT (The "No-Scroll" Fix)
+   MOBILE "SPORTS CARD" LAYOUT (Fixed)
    ========================================= */
 @media (max-width: 768px) {
   
-  /* 1. RESET THE TABLE WIDTH (Critical) */
-  .table-wrapper {
-    overflow-x: hidden; /* Disable side scroll */
-  }
-
-  table {
-    min-width: 0 !important; /* Override desktop width */
-    width: 100% !important;
-    display: block;
-  }
-  
-  thead, tbody, th, td, tr { 
+  /* 1. Reset to Blocks */
+  table, thead, tbody, th, td, tr { 
     display: block; 
     width: 100%;
-    box-sizing: border-box; /* Ensure padding stays inside width */
+    box-sizing: border-box;
   }
+
+  thead { display: none; }
 
   .app-container {
     padding: 10px;
-    width: 100%;
-    overflow-x: hidden;
+    background: transparent;
+    box-shadow: none;
   }
-  
-  /* 2. Hide Headers */
-  thead { display: none; }
 
-  /* 3. Card Style Rows */
+  /* 2. The Card Container */
   tr {
     background: white;
     margin-bottom: 15px;
     border-radius: 12px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08); /* Slightly deeper shadow */
     border: 1px solid #e5e7eb;
-    padding: 15px;
-    position: relative;
+    
+    /* KEY CHANGE: Add padding at TOP for the Rank/Score header */
+    padding: 50px 20px 20px 20px; 
+    position: relative; /* Allows absolute positioning inside */
   }
 
-  /* 4. Reset Cells */
   td {
     padding: 0;
     border: none;
-    height: auto;
   }
 
-  /* --- ROW 1: HEADER (Rank - Logo - Name - Score) --- */
-  /* We hijack the team-cell to hold the top row layout */
-  .team-cell {
-    display: grid;
-    grid-template-columns: auto auto 1fr auto; /* Rank | Logo | Name | Score */
-    align-items: center;
-    gap: 10px;
-    border-bottom: 1px solid #f3f4f6;
-    padding-bottom: 10px;
-    margin-bottom: 10px;
-    width: 100%;
-  }
-
-  /* Rank Number */
+  /* 3. RANK (Absolute Top Left) */
   .rank-num {
-    grid-column: 1;
-    font-size: 1rem;
-    color: #9ca3af;
-    font-weight: 800;
+    position: absolute;
+    top: 15px;
+    left: 20px;
+    font-size: 1.4rem; /* Big number */
+    color: #9ca3af;    /* Muted gray */
     width: auto;
-    margin: 0;
-  }
-
-  /* Logo */
-  .team-cell img {
-    grid-column: 2;
-    width: 32px; 
-    height: 32px;
-    object-fit: contain;
-    margin: 0;
+    text-align: left;
+    font-weight: 900;
+    letter-spacing: -1px;
   }
   
-  /* Name */
-  .team-name-text { 
-    grid-column: 3;
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: #111827;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: block;
-  }
-
-  /* Score */
+  /* 4. SCORE (Absolute Top Right) */
   .score-cell {
-    grid-column: 4;
+    position: absolute;
+    top: 15px;
+    right: 20px;
     text-align: right;
-    font-size: 1.4rem;
+    font-size: 1.6rem;
     line-height: 1;
-    margin: 0;
-    padding: 0;
-    width: auto;
+    color: #059669;
   }
   
-  /* "AVG" Label under the score */
   .score-cell::after {
     content: "AVG";
     display: block;
-    font-size: 0.6rem;
+    font-size: 0.65rem;
     color: #9ca3af;
+    font-weight: 700;
     margin-top: 2px;
+    letter-spacing: 1px;
   }
 
-  /* --- ROW 2: SOURCE TAGS --- */
-  .source-tags {
-    display: flex;
-    flex-wrap: wrap; /* Forces tags to wrap to next line */
-    gap: 8px;
+  /* 5. TEAM (Centered in the middle) */
+  .team-cell {
+    font-size: 1.4rem;
+    justify-content: center; /* Center the logo and name */
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #f3f4f6;
     width: 100%;
   }
 
+  .team-cell img {
+    width: 40px; 
+    height: 40px;
+    margin-right: 12px;
+  }
+
+  /* 6. TAGS (Horizontal Scroll) */
+  .source-tags {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding-bottom: 5px;
+    scrollbar-width: none; 
+    -ms-overflow-style: none; 
+  }
+  
+  .source-tags::-webkit-scrollbar { 
+    display: none; 
+  }
+
   .tag {
-    /* flex: 1 1 calc(33% - 10px);  Forces 3 per row roughly */
-    flex: 1 1 auto;
-    text-align: center;
-    font-size: 0.8rem;
-    padding: 8px 4px;
-    background-color: #f9fafb;
+    flex: 0 0 auto;
+    padding: 8px 12px;
+    background: #f9fafb;
     border: 1px solid #e5e7eb;
+    font-size: 0.85rem;
+    font-weight: 500;
     border-radius: 6px;
   }
   
-  /* Admin Fixes */
+  /* Admin Forms */
   .form-row { flex-direction: column; }
   .rank-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
   input, select, textarea { font-size: 16px !important; }
