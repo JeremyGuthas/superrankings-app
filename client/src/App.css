@@ -3,7 +3,7 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   background-color: #f3f4f6;
   margin: 0;
-  padding: 15px; /* Less padding on mobile */
+  padding: 15px;
   color: #1f2937;
 }
 
@@ -16,19 +16,18 @@ body {
   padding: 20px;
   border-radius: 12px;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-  box-sizing: border-box; /* Ensures padding doesn't break width */
+  box-sizing: border-box;
 }
 
-/* --- RESPONSIVE HEADER --- */
+/* --- HEADER --- */
 header {
   display: flex;
-  flex-direction: row; /* Default to row */
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
   padding-bottom: 20px;
   border-bottom: 1px solid #e5e7eb;
-  flex-wrap: wrap; /* Allow wrapping on small screens */
   gap: 15px;
 }
 
@@ -39,34 +38,33 @@ header h1 {
   line-height: 1.2;
 }
 
-/* --- BUTTONS (Mobile Friendly) --- */
+/* --- BUTTONS --- */
 button {
-  padding: 12px 20px; /* Larger touch target */
+  padding: 10px 16px;
   background: #374151;
   color: white;
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   font-weight: 600;
   transition: background 0.2s;
-  white-space: nowrap;
 }
 
 button:hover {
   background: #1f2937;
 }
 
-/* --- WEEK TABS (Scrollable) --- */
+/* --- WEEK TABS --- */
 .week-tabs {
   display: flex;
   gap: 10px;
   margin-bottom: 20px;
   border-bottom: 2px solid #e5e7eb;
   padding-bottom: 10px;
-  overflow-x: auto; /* Enable horizontal scrolling */
-  -webkit-overflow-scrolling: touch; /* Smooth scroll on iOS */
-  scrollbar-width: none; /* Hide scrollbar for clean look */
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none; /* Clean scrollbar */
 }
 
 .tab {
@@ -77,8 +75,8 @@ button:hover {
   border: none;
   border-radius: 6px;
   cursor: pointer;
-  white-space: nowrap; /* Don't wrap text */
-  flex-shrink: 0; /* Don't squish tabs */
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .tab.active {
@@ -86,7 +84,7 @@ button:hover {
   color: white;
 }
 
-/* --- DESKTOP TABLE STYLES (Default) --- */
+/* --- DESKTOP TABLE STYLES --- */
 .table-wrapper {
   width: 100%;
   overflow-x: auto;
@@ -95,7 +93,7 @@ button:hover {
 table {
   width: 100%;
   border-collapse: collapse;
-  min-width: 600px; /* Force scroll on small tables */
+  min-width: 600px;
 }
 
 thead {
@@ -109,15 +107,16 @@ th {
   font-weight: 600;
   text-transform: uppercase;
   font-size: 0.85rem;
+  letter-spacing: 0.05em;
 }
 
 td {
   padding: 12px 15px;
   border-bottom: 1px solid #f3f4f6;
   vertical-align: middle;
+  height: 50px;
 }
 
-/* --- TEAM & RANK --- */
 .rank-num {
   font-weight: 800;
   color: #374151;
@@ -141,7 +140,6 @@ td {
   font-size: 1.2rem;
 }
 
-/* --- TAGS --- */
 .source-tags {
   display: flex;
   flex-wrap: wrap;
@@ -162,130 +160,169 @@ td {
   color: #111827;
 }
 
+.approve-btn {
+  background: white;
+  border: 1px solid #059669;
+  color: #059669;
+  padding: 4px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-left: 10px;
+}
 
 /* =========================================
-   MOBILE TRANSFORMATION (The Magic Part) 
+   MOBILE GRID LAYOUT (THE FIX)
    ========================================= */
 @media (max-width: 768px) {
   
   body {
     padding: 10px;
-    background-color: #f0f2f5;
+    background-color: #f8fafc;
   }
 
   .app-container {
-    padding: 15px;
-    background: transparent; /* Remove white box on mobile */
+    padding: 10px;
+    background: transparent;
     box-shadow: none;
   }
 
-  /* Stack the Header */
+  /* Make header buttons span full width */
   header {
-    flex-direction: column;
-    align-items: stretch; /* Full width buttons */
     background: white;
     padding: 15px;
-    border-radius: 10px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    border-radius: 12px;
+    border: 1px solid #e5e7eb;
+    flex-direction: column;
+    align-items: stretch;
   }
-
+  
   header h1 {
     text-align: center;
     font-size: 1.5rem;
   }
 
-  /* Hide the Table Headers (Rank, Team, etc.) */
   thead {
     display: none; 
   }
 
-  /* Turn Rows into Cards */
+  /* GRID CARD LAYOUT 
+     Row 1: Rank | Team Name ...... Score 
+     Row 2: ....................... Score Label
+     Row 3: Source Tags (Full Width)
+  */
   tr {
-    display: block;
+    display: grid;
+    grid-template-columns: auto 1fr auto; /* 3 Columns */
+    grid-template-rows: auto auto auto;   /* 3 Rows */
+    grid-template-areas: 
+      "rank team score"
+      "rank team scorelabel"
+      "tags tags tags";
+    gap: 5px 15px; /* Row Gap 5px, Col Gap 15px */
+    
     background: white;
     margin-bottom: 15px;
-    border-radius: 10px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
     padding: 15px;
+    border-radius: 12px;
     border: 1px solid #e5e7eb;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.03);
   }
 
-  /* Arrange Cells inside the Card */
   td {
     display: block;
-    padding: 5px 0;
+    padding: 0;
     border: none;
-    text-align: left;
+    height: auto;
   }
 
-  /* 1. Rank Number (Top Left Corner) */
+  /* 1. RANK (Top Left) */
   .rank-num {
-    text-align: left;
-    font-size: 0.9rem;
-    color: #6b7280;
-    margin-bottom: 5px;
+    grid-area: rank;
+    font-size: 1.2rem;
+    color: #9ca3af;
+    width: auto;
+    align-self: center;
   }
   .rank-num::before {
-    content: "RANK #";
+    content: "#";
+    font-size: 0.9rem;
     font-weight: 400;
-    color: #9ca3af;
   }
 
-  /* 2. Team Name (Big & Bold) */
+  /* 2. TEAM (Middle, stretches to fill space) */
   .team-cell {
-    font-size: 1.4rem;
-    margin-bottom: 10px;
-    border-bottom: 1px solid #f3f4f6;
-    padding-bottom: 10px;
-  }
-
-  /* 3. Score (Right side) */
-  .score-cell {
-    float: right; /* Float it to top right corner */
-    margin-top: -65px; /* Pull it up next to team name */
-    font-size: 1.5rem;
-  }
-  .score-cell::after {
-    content: " AVG";
-    font-size: 0.7rem;
-    color: #9ca3af;
-    font-weight: 400;
-    display: block;
-    text-align: right;
-  }
-
-  /* 4. Source List */
-  .source-tags {
-    display: flex;
-    gap: 8px;
-    overflow-x: auto; /* Horizontal scroll for tags */
-    padding-bottom: 5px;
-    -webkit-overflow-scrolling: touch;
+    grid-area: team;
+    font-size: 1.1rem; /* Slightly smaller to prevent wrap */
+    align-self: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis; /* Adds "..." if name is too long */
   }
   
+  .team-cell img {
+    width: 28px; 
+    height: 28px;
+  }
+
+  /* 3. SCORE (Top Right) */
+  .score-cell {
+    grid-area: score;
+    text-align: right;
+    font-size: 1.5rem;
+    line-height: 1;
+    align-self: end; /* Align to bottom of its area */
+  }
+
+  /* This pseudo-element creates the "AVG" label under the score */
+  .score-cell::after {
+    content: "AVG";
+    display: block;
+    font-size: 0.65rem;
+    color: #9ca3af;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-top: 2px;
+    letter-spacing: 0.5px;
+  }
+
+  /* 4. TAGS (Bottom Row, Full Width) */
+  .source-tags {
+    grid-area: tags;
+    display: flex;
+    flex-wrap: wrap; /* WRAP tags so they don't scroll off screen */
+    gap: 8px;
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid #f3f4f6;
+    width: 100%;
+  }
+
   .tag {
-    font-size: 0.85rem;
-    padding: 6px 10px;
-    background: #f9fafb;
+    flex-grow: 1; /* Tags grow to fill space evenly */
+    text-align: center;
+    font-size: 0.8rem;
+    padding: 6px 8px;
+    background-color: #f9fafb;
     border: 1px solid #e5e7eb;
   }
-  
-  /* Admin Input Fixes */
+
+  /* --- ADMIN MOBILE FIXES --- */
   .form-row {
     flex-direction: column;
   }
-  
+
   .rank-grid {
     grid-template-columns: 1fr; /* Stack inputs vertically */
   }
-  
+
   .login-box {
     width: 100%;
-    margin: 20px 0;
+    margin: 10px 0;
+    padding: 20px;
   }
-  
-  /* Prevent iOS Zoom on Inputs */
+
+  /* Fix Zoom on iPhone inputs */
   input, select, textarea {
-    font-size: 16px !important; 
+    font-size: 16px !important;
   }
 }
