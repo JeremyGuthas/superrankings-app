@@ -181,7 +181,7 @@ function App() {
   return (
     <div className="app-container">
       <header>
-        <h1>NFL Consensus Power Rankings (v2)</h1>
+        <h1>NFL Consensus Power Rankings (v3)</h1>
         <button onClick={handleAdminClick}>
           {view === 'table' ? 'Admin Login' : 'Back to Table'}
         </button>
